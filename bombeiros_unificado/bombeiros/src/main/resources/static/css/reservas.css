@@ -1,0 +1,54 @@
+/* ==========================================================================
+   ESTILOS EXCLUSIVOS PARA O SISTEMA DE RESERVAS DE PLANTÃO
+   ========================================================================== */
+
+.escala-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 0 20px 0;
+}
+
+/* Badge Geral de Turno */
+.turno-badge {
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+/* Customização dos Cards de Plantão Disponível e Minhas Reservas */
+.plantao-card {
+    background: #ffffff;
+    border-radius: 15px;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plantao-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Input groups customizados para o formulário de confirmação */
+.input-group-text {
+    border-color: #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.form-control:read-only {
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+/* Ajustes finos de espaçamento para o container mobile */
+.escala-intro h2 {
+    color: #111111;
+    font-weight: 800;
+}
+
+.escala-intro p {
+    margin-bottom: 0;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Pré-Escala</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="perfil-body">
+    
+    <div class="mobile-app-container perfil-container">
+        
+        <div class="perfil-header">
+            <i class="fas fa-user-circle"></i>
+            <h2 th:text="${bombeiro.nome}">Nome do Bombeiro</h2>
+            <p class="perfil-tipo" th:text="${bombeiro.perfil}">BOMBEIRO</p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-label">E-mail de Acesso</div>
+            <div class="info-value" th:text="${bombeiro.email}">email@exemplo.com</div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-label">Tipo de Vínculo</div>
+            <div class="info-value" th:text="${bombeiro.tipo}">VOLUNTARIO</div>
+        </div>
+
+        <!-- Novos campos de Habilidades e CNH -->
+        
+        <div class="info-card" th:if="${bombeiro.categoriaCnh != null and !bombeiro.categoriaCnh.isEmpty()}">
+            <div class="info-label">Categoria CNH</div>
+            <div class="info-value" th:text="${bombeiro.categoriaCnh}">AB</div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-label">Curso de Socorrista</div>
+            <div class="info-value" th:text="${bombeiro.cursoSocorrista != null and bombeiro.cursoSocorrista ? 'Sim' : 'Não'}">Sim</div>
+        </div>
+
+        <div class="info-card" th:if="${bombeiro.habilidades != null and !bombeiro.habilidades.isEmpty()}">
+            <div class="info-label">Habilidades Profissionais</div>
+            <div class="info-value" th:text="${bombeiro.habilidades}">Combate a incêndio</div>
+        </div>
+
+        <!-- Botões -->
+        <div class="p-4 mt-3">
+            <a href="/" class="btn btn-voltar w-100 mb-3 d-flex align-items-center justify-content-center">
+                <i class="fas fa-arrow-left me-2"></i> Voltar à Escala
+            </a>
+            
+            <a href="/logout" class="btn btn-sair w-100 d-flex align-items-center justify-content-center">
+                <i class="fas fa-sign-out-alt me-2"></i> Sair da Conta
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

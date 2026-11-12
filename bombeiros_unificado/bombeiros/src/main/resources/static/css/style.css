@@ -1,0 +1,1075 @@
+/* Estilos Globais e Container Mobile */
+body {
+    background-color: #e9ecef;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.mobile-app-container {
+    width: 100%;
+    max-width: 414px;
+    height: 850px;
+    max-height: 100vh;
+    background-color: #f4f6f8;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================
+   TELA DE LOGIN
+   ============================ */
+#login-view {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: url('https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?auto=format&fit=crop&w=600&q=80') center/cover no-repeat;
+    position: relative;
+}
+
+.login-overlay {
+    flex: 1;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+}
+
+.login-text h5 {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.login-text h1 {
+    color: #fff;
+    font-weight: 900;
+    font-size: 2.8rem;
+    margin-bottom: 5px;
+}
+
+.login-text p {
+    color: #ddd;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+.login-form-box {
+    background-color: #f4f6f8;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    padding: 40px 30px;
+    flex-shrink: 0;
+}
+
+.login-form-box label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.login-form-box .form-control {
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.btn-entrar {
+    background-color: #d32f2f;
+    color: white;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: bold;
+    width: 100%;
+    font-size: 1.1rem;
+    border: none;
+}
+
+.btn-entrar:hover {
+    background-color: #b71c1c;
+    color: white;
+}
+
+/* ============================
+   TELA DE DASHBOARD
+   ============================ */
+.dashboard-view {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    background-color: #f4f6f8;
+    overflow-y: auto;
+    padding-bottom: 80px;
+}
+
+.dash-header {
+    padding: 20px 20px 10px;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+/* Card Hero (Próximo Plantão) */
+.hero-card {
+    margin: 0 20px 20px;
+    border-radius: 20px;
+    background: url('/img/plantao.png') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    padding: 25px 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h6 {
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #ddd;
+    margin-bottom: 5px;
+}
+
+.hero-content h2 {
+    font-weight: 900;
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.hero-content p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.badge-shift {
+    background-color: #ff9800;
+    color: #000;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 0.85rem;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.shift-time {
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.hero-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    gap: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.badge-alert {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+/* Lista de Alertas */
+.section-title {
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 10px 20px 15px;
+    color: #111;
+}
+
+.alert-item {
+    background: white;
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin: 0 20px 12px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #ffc107;
+    border-radius: 50%;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.alert-info h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.alert-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 3px;
+}
+
+/* Menu de Navegação Inferior */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 25px;
+    border-top: 1px solid #eee;
+    z-index: 10;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #a0a0a0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    gap: 4px;
+}
+
+.nav-item i {
+    font-size: 1.3rem;
+}
+
+.nav-item.active {
+    color: #d32f2f;
+}
+
+.nav-item:hover {
+    color: #d32f2f;
+}
+
+/* Oculta scrollbar para ficar com visual de app */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Cores dos turnos */
+
+.turno-badge.turno-manha {
+    background-color: #ffefd5 !important;
+    color: #ff9800 !important;
+}
+
+.turno-badge.turno-tarde {
+    background-color: #dbeafe !important;
+    color: #2563eb !important;
+}
+
+.turno-badge.turno-noite {
+    background-color: #ede9fe !important;
+    color: #7c3aed !important;
+}
+
+
+/* ==========================================================================
+   1. ESTILOS GLOBAIS E CONTAINER MOBILE (PADRÃO PARA TODAS AS TELAS)
+   ========================================================================== */
+body {
+    background-color: #e9ecef;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-app-container {
+    width: 100%;
+    max-width: 414px;
+    height: 850px;
+    max-height: 100vh;
+    background-color: #fdfdfd;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Oculta scrollbar global para visual nativo de aplicativo */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* ==========================================================================
+   2. TELA DE LOGIN (INDEX)
+   ========================================================================== */
+#login-view, .login-view {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: url('https://unsplash.com') center/cover no-repeat;
+    position: relative;
+}
+
+.login-overlay {
+    flex: 1;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+}
+
+.login-text h5 {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.login-text h1 {
+    color: #fff;
+    font-weight: 900;
+    font-size: 2.8rem;
+    margin-bottom: 5px;
+}
+
+.login-text p {
+    color: #ddd;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+.login-form-box {
+    background-color: #f4f6f8;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    padding: 40px 30px;
+    flex-shrink: 0;
+}
+
+.login-form-box label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.login-form-box .form-control {
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.btn-entrar {
+    background-color: #d32f2f;
+    color: white;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: bold;
+    width: 100%;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-entrar:hover {
+    background-color: #b71c1c;
+    color: white;
+}
+
+/* ==========================================================================
+   3. ESTRUTURA DE VIEW E CABEÇALHO (DASHBOARD & ESCALAS)
+   ========================================================================== */
+.dashboard-view {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    background-color: #f4f6f8;
+    overflow-y: auto;
+    padding-bottom: 85px;
+}
+
+.dash-header {
+    padding: 20px;
+    background: #d32f2f;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Card Hero (Próximo Plantão na Home) */
+.hero-card {
+    margin: 20px;
+    border-radius: 20px;
+    background: url('/img/plantao.png') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    padding: 25px 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h6 {
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #ddd;
+    margin-bottom: 5px;
+}
+
+.hero-content h2 {
+    font-weight: 900;
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.hero-content p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.badge-shift {
+    background-color: #ff9800;
+    color: #000;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 0.85rem;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.shift-time {
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.hero-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    gap: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.badge-alert {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+/* Lista de Alertas na Home */
+.section-title {
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin: 15px 20px 10px;
+    color: #111;
+}
+
+.alert-item {
+    background: white;
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin: 0 20px 12px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #ffc107;
+    border-radius: 50%;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.alert-info h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.alert-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 3px;
+}
+
+/* ==========================================================================
+   4. ABA DE ESCALAS (CALENDÁRIO & FILTROS)
+   ========================================================================== */
+.escala-content {
+    padding: 15px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.escala-intro h2 {
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: #111;
+    margin: 0 0 4px;
+}
+
+.escala-intro p {
+    color: #888;
+    font-size: 0.85rem;
+    margin: 0 0 15px;
+}
+
+/* Card Interno do Calendário */
+.calendar-card {
+    background: white;
+    padding: 15px;
+    border-radius: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-header h5 {
+    font-weight: 800;
+    font-size: 1rem;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.calendar-header button {
+    border: none;
+    background: #f4f6f8;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.week-days, 
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: 6px;
+}
+
+.week-days {
+    color: #999;
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+}
+
+.day {
+    padding: 8px 0;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: #333;
+}
+
+.day.empty {
+    cursor: default;
+}
+
+.day.selected {
+    background: #d32f2f !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.day.today:not(.selected) {
+    border: 1px solid #d32f2f;
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+/* Filtros por Botão de Turno */
+.turno-filter {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.turno-filter button {
+    flex: 1;
+    border: none;
+    background: white;
+    padding: 8px 2px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #777;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.turno-filter button.active {
+    background: #d32f2f;
+    color: white;
+}
+
+/* Cards de Plantão */
+.plantao-card {
+    background: white;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.plantao-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.plantao-top h5 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.turno-badge {
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.turno-badge.turno-manha {
+    background-color: #ffefd5 !important;
+    color: #ff9800 !important;
+}
+
+.turno-badge.turno-tarde {
+    background-color: #dbeafe !important;
+    color: #2563eb !important;
+}
+
+.turno-badge.turno-noite {
+    background-color: #ede9fe !important;
+    color: #7c3aed !important;
+}
+
+.plantao-horario {
+    color: #888;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.plantao-info {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.plantao-status {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.empty-message {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: #888;
+}
+
+/* ==========================================================================
+   5. MENU DE NAVEGAÇÃO INFERIOR ALINHADO (ÍCONES ACIMA DO TEXTO)
+   ========================================================================== */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #eee;
+    z-index: 100;
+    box-sizing: border-box;
+    padding-bottom: 5px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #a0a0a0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    gap: 4px;
+    flex: 1;
+    transition: color 0.2s;
+}
+
+.nav-item i {
+    font-size: 1.4rem;
+    display: inline-block;
+}
+
+.nav-item.active {
+    color: #d32f2f;
+}
+
+.nav-item:hover {
+    color: #d32f2f;
+}
+
+/* =========================================
+   CORREÇÃO DO DASHBOARD PRINCIPAL
+   ========================================= */
+
+.mobile-app-container {
+    width: 100%;
+    max-width: 414px;
+    height: 850px;
+    max-height: 100vh;
+    overflow: hidden;
+    background-color: #f4f6f8;
+    position: relative;
+}
+
+.dashboard-view {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-bottom: 85px !important;
+    box-sizing: border-box;
+}
+
+/* Cabeçalho */
+.dash-header {
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #d32f2f;
+    color: white;
+    padding: 15px 18px !important;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* Cartão do próximo plantão */
+.hero-card {
+    min-height: 190px;
+    margin: 18px;
+    padding: 25px 18px;
+    border-radius: 18px;
+    background: url('/img/plantao.png') center center / cover no-repeat;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0,0,0,.85),
+        rgba(0,0,0,.25)
+    );
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h2 {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: white;
+}
+
+.hero-content h4 {
+    color: white;
+    font-weight: 800;
+}
+
+.hero-content p {
+    color: white;
+}
+
+/* Títulos */
+.section-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 18px 18px 12px;
+    color: #111;
+}
+
+/* Indicadores */
+.dashboard-indicators {
+    width: 100%;
+}
+
+.dashboard-indicators .row {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+
+.dashboard-indicators .card {
+    border-radius: 14px;
+    min-height: 110px;
+    background-color: white;
+    padding: 15px !important;
+    transition: transform .2s;
+}
+
+.dashboard-indicators .card:active {
+    transform: scale(.98);
+}
+
+.dashboard-indicators .card h4 {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.dashboard-indicators .card small {
+    font-size: .78rem;
+}
+
+/* Acesso rápido */
+.quick-access {
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.quick-access .btn {
+    border-radius: 10px;
+    min-height: 43px;
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+/* Menu inferior */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #eee;
+    z-index: 100;
+}
+
+.nav-item {
+    flex: 1;
+    text-decoration: none;
+    color: #999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: .72rem;
+    font-weight: 600;
+    gap: 4px;
+}
+
+.nav-item i {
+    font-size: 1.3rem;
+}
+
+.nav-item.active {
+    color: #d32f2f;
+}
+
+/* Responsividade */
+@media (max-width: 414px) {
+    body {
+        align-items: flex-start;
+    }
+
+    .mobile-app-container {
+        height: 100dvh;
+        max-height: 100dvh;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-app-container {
+        height: 850px;
+        max-height: 95vh;
+    }
+}
+/* =========================================
+   ESTILOS DA PÁGINA DE PERFIL
+   ========================================= */
+
+.perfil-body {
+    background-color: #f4f6f9;
+}
+
+.perfil-container {
+    background-color: #f4f6f9;
+    min-height: 100vh;
+    display: block;
+}
+
+.perfil-header {
+    background: linear-gradient(135deg, #cc0000, #990000);
+    color: white;
+    padding: 40px 20px 20px 20px;
+    text-align: center;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.perfil-header i {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.perfil-header h2 {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.perfil-header .perfil-tipo {
+    margin-bottom: 0;
+    opacity: 0.9;
+}
+
+.info-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-left: 4px solid #cc0000;
+}
+
+.info-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0;
+}
+
+.btn-voltar {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.btn-voltar:hover {
+    background-color: #990000;
+    color: white;
+}
+
+.btn-sair {
+    background-color: white;
+    color: #cc0000;
+    border: 2px solid #cc0000;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.btn-sair:hover {
+    background-color: #cc0000;
+    color: white;
+}

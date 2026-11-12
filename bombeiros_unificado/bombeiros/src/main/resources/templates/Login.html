@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pré-Escala</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+    <div class="mobile-app-container">
+        <div class="login-view">
+            <div class="login-overlay">
+                <div class="login-text">
+                    <h5>CORPO DE BOMBEIROS</h5>
+                    <h1>Pré-Escala</h1>
+                    <p>Entre para visualizar os seus plantões</p>
+                </div>
+            </div>
+            
+            <div class="login-form-box">
+                <!-- Mensagem de erro caso a senha ou email falhem -->
+                <div th:if="${erro != null}">
+                    <p style="color: #dc3545; text-align: center; font-weight: bold;" th:text="${erro}"></p>
+                </div>
+
+                <!-- Formulário envia e-mail e senha por POST para "/" (LoginController confere no banco) -->
+                <form th:action="@{/}" method="POST">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="seuemail@exemplo.com" th:value="${emailDigitado}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Senha</label>
+                        <input type="password" name="senha" class="form-control" placeholder="Sua senha" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-entrar w-100 mt-2">Entrar</button>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
