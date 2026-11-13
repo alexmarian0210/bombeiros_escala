@@ -81,13 +81,14 @@ public class EscalaController {
         List<EscalaPlantao> todosPlantoes =
                 escalaRepository.findAll();
 
-        // Plantões de hoje
+        // Plantões de hoje: MANHÃ, TARDE e NOITE
         List<EscalaPlantao> plantoesHoje =
                 todosPlantoes.stream()
                         .filter(e -> e.getData() != null)
                         .filter(e -> e.getData().equals(hoje))
-                        .sorted(Comparator.comparing(
-                                EscalaPlantao::getTurno))
+                        .sorted(Comparator.comparingInt(
+                                e -> ordemTurno(e.getTurno())
+                        ))
                         .toList();
 
         // Próximos três plantões, considerando data e horário
@@ -234,11 +235,14 @@ public class EscalaController {
                         // Mostra somente até o último dia deste mês
                         .filter(e -> !e.getData().isAfter(ultimoDiaMes))
 
-                        // Ordena por data e turno
+                        // Ordena por data e turno:
+                        // MANHÃ -> TARDE -> NOITE
                         .sorted(
                                 Comparator
                                         .comparing(EscalaPlantao::getData)
-                                        .thenComparing(EscalaPlantao::getTurno)
+                                        .thenComparingInt(
+                                                e -> ordemTurno(e.getTurno())
+                                        )
                         )
                         .toList();
 
@@ -259,7 +263,6 @@ public class EscalaController {
 
     // =========================================================
     // PLANTÕES DISPONÍVEIS
-    // Redireciona para a tela principal de escalas
     // =========================================================
 
     @GetMapping("/plantoes-disponiveis")
@@ -475,10 +478,33 @@ public class EscalaController {
         };
     }
 
+    // Define a ordem correta dos turnos
+    private int ordemTurno(String turno) {
+
+        if (turno == null) {
+            return 4;
+        }
+
+        return switch (normalizarTurno(turno)) {
+
+            case "MANHA" -> 1;
+
+            case "TARDE" -> 2;
+
+            case "NOITE" -> 3;
+
+            default -> 4;
+        };
+    }
+
     private String normalizarTurno(String turno) {
 
+        if (turno == null) {
+            return "";
+        }
+
         return turno.trim()
-                .toUpperCase()
+                .toUpperCase(Locale.ROOT)
                 .replace("Ã", "A");
     }
 }

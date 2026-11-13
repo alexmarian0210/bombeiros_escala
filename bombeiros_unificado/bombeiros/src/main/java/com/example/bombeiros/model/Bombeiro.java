@@ -1,5 +1,6 @@
 package com.example.bombeiros.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -15,12 +16,12 @@ public class Bombeiro {
     private String tipo;
     private String email;
     
+    @JsonIgnore
     @Column(name = "senha_hash")
     private String senhaHash;
     
     private String perfil;
 
-    // Novos campos adicionados
     @Column(name = "categoria_cnh")
     private String categoriaCnh;
     
@@ -29,10 +30,17 @@ public class Bombeiro {
     
     private String habilidades;
 
+    @Column(name = "turma_12x36")
+    private String turma12x36;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "bombeiro")
     private List<Participacao> participacoes;
 
-    // Getters e Setters
+    public boolean possuiCnh() {
+        return this.categoriaCnh != null && !this.categoriaCnh.trim().isEmpty();
+    }
+
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     
@@ -59,6 +67,9 @@ public class Bombeiro {
 
     public String getHabilidades() { return habilidades; }
     public void setHabilidades(String habilidades) { this.habilidades = habilidades; }
+
+    public String getTurma12x36() { return turma12x36; }
+    public void setTurma12x36(String turma12x36) { this.turma12x36 = turma12x36; }
 
     public List<Participacao> getParticipacoes() { return participacoes; }
     public void setParticipacoes(List<Participacao> participacoes) { this.participacoes = participacoes; }
