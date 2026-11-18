@@ -2,6 +2,7 @@ package com.example.bombeiros.controller;
 
 import com.example.bombeiros.model.Bombeiro;
 import com.example.bombeiros.repository.BombeiroRepository;
+import com.example.bombeiros.service.PasswordService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,13 @@ import java.util.Optional;
 public class LoginController {
 
     private final BombeiroRepository bombeiroRepository;
+    private final PasswordService passwordService;
 
-    public LoginController(BombeiroRepository bombeiroRepository) {
+    public LoginController(
+            BombeiroRepository bombeiroRepository,
+            PasswordService passwordService) {
         this.bombeiroRepository = bombeiroRepository;
+        this.passwordService = passwordService;
     }
 
     // Abre a tela de login na raiz do sistema.
@@ -38,8 +43,7 @@ public class LoginController {
         return "Login";
     }
 
-    // Login com comparação direta da senha armazenada no banco.
-    // Não utiliza BCrypt, hash ou Spring Security.
+    // Login com suporte a senhas antigas (migração automática) e hashes PBKDF2.
     @PostMapping("/")
     public String processarLogin(
             @RequestParam("email") String email,
@@ -60,12 +64,23 @@ public class LoginController {
 
         if (bombeiroOpt.isPresent()) {
             Bombeiro bombeiro = bombeiroOpt.get();
-
-            // O campo senhaHash representa aqui a coluna senha_hash,
-            // mas o conteúdo é texto simples, conforme solicitado.
             String senhaCadastrada = bombeiro.getSenhaHash();
 
-            if (senhaCadastrada != null && senhaCadastrada.equals(senha)) {
+            boolean senhaValida = false;
+
+            if (senhaCadastrada != null) {
+                if (senhaCadastrada.startsWith("pbkdf2$")) {
+                    // Senha já está criptografada no novo padrão
+                    senhaValida = passwordService.matches(senha, senhaCadastrada);
+                } else if (senhaCadastrada.equals(senha)) {
+                    // Senha antiga em texto puro: valida e converte para hash no banco
+                    senhaValida = true;
+                    bombeiro.setSenhaHash(passwordService.encode(senha));
+                    bombeiroRepository.save(bombeiro);
+                }
+            }
+
+            if (senhaValida) {
                 // Cria uma nova sessão após autenticar.
                 HttpSession sessaoAntiga = request.getSession(false);
                 if (sessaoAntiga != null) {

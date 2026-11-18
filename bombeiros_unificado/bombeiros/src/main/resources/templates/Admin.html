@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Bombeiros</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}" href="/css/admin.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+        <header class="header">
+            <div>
+                <h1>Administração</h1>
+                <p>Cadastros e equipes</p>
+            </div>
+            <a href="/home" class="btn-voltar">Início</a>
+        </header>
+
+        <main class="container">
+            <!-- Cards de Resumo -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <span>Total</span>
+                    <strong id="statTotal">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Voluntários</span>
+                    <strong id="statVoluntarios">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>CLTs / Estág.</span>
+                    <strong id="statClts">0</strong>
+                </div>
+            </section>
+
+            <!-- Formulário de Cadastro / Edição -->
+            <section class="card" id="secaoFormulario">
+                <h2 id="formTitulo">Cadastrar bombeiro</h2>
+                <form id="formBombeiro">
+                    <input type="hidden" id="bombeiroId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nome">Nome completo</label>
+                            <input type="text" id="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input type="password" id="senha" placeholder="Obrigatória no cadastro">
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo de bombeiro</label>
+                            <select id="tipo" required>
+                                <option value="">Selecione</option>
+                                <option value="CLT">CLT</option>
+                                <option value="VOLUNTARIO">Voluntário</option>
+                                <option value="ESTAGIARIO">Estagiário</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="perfil">Perfil</label>
+                            <select id="perfil" required>
+                                <option value="BOMBEIRO">Bombeiro</option>
+                                <option value="CHEFE_EQUIPE">Chefe de Equipe</option>
+                                <option value="ADMINISTRADOR">Administrador</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoriaCnh">Categoria da CNH</label>
+                            <select id="categoriaCnh">
+                                <option value="">Não possui / Não informado</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="AB">AB</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="condutorEmergencia">Condutor de emergência</label>
+                            <select id="condutorEmergencia">
+                                <option value="false">Não</option>
+                                <option value="true">Sim</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="habilidades">Habilidades e observações</label>
+                            <input type="text" id="habilidades" placeholder="Ex: condutor, socorrista...">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-salvar">Salvar cadastro</button>
+                        <button type="button" class="btn-cancelar" onclick="limparFormulario()">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+            <!-- Lista de Bombeiros -->
+            <section class="card">
+                <div class="list-header">
+                    <h2>Lista de bombeiros</h2>
+                    <button type="button" class="btn-novo" onclick="novoCadastro()">+ Novo</button>
+                </div>
+
+                <div class="filtros-grid">
+                    <input type="text" id="filtroBusca" placeholder="Buscar por nome ou e-mail..."
+                        oninput="filtrarTabela()">
+                    <select id="filtroTipo" onchange="filtrarTabela()">
+                        <option value="">Todos os tipos</option>
+                        <option value="CLT">CLT</option>
+                        <option value="VOLUNTARIO">Voluntário</option>
+                        <option value="ESTAGIARIO">Estagiário</option>
+                    </select>
+                </div>
+
+                <div id="listaBombeirosMobile" class="bombeiro-lista-mobile"></div>
+            </section>
+        </main>
+
+        <!-- Barra Inferior Fixa -->
+        <nav class="bottom-nav">
+            <a href="/home">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span>Início</span>
+            </a>
+            <a href="/escalas">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
+                </svg>
+                <span>Escalas</span>
+            </a>
+            <a href="/alertas">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+                </svg>
+                <span>Alertas</span>
+            </a>
+            <a href="/admin" class="active">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+                </svg>
+                <span>Admin</span>
+            </a>
+            <a href="/perfil">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+                <span>Perfil</span>
+            </a>
+        </nav>
+    </div>
+    <script>
+        let bombeirosCache = [];
+
+        async function carregarBombeiros() {
+            const resp = await fetch('/api/admin/bombeiros');
+            if (!resp.ok) return;
+            bombeirosCache = await resp.json();
+            atualizarCards();
+            filtrarTabela();
+        }
+
+        function atualizarCards() {
+            const total = bombeirosCache.length;
+            const voluntarios = bombeirosCache.filter(b => b.tipo === 'VOLUNTARIO').length;
+            const clts = bombeirosCache.filter(b => b.tipo === 'CLT' || b.tipo === 'ESTAGIARIO').length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statVoluntarios').textContent = voluntarios;
+            document.getElementById('statClts').textContent = clts;
+        }
+
+        function filtrarTabela() {
+            const termo = document.getElementById('filtroBusca').value.toLowerCase();
+            const tipo = document.getElementById('filtroTipo').value;
+
+            const filtrados = bombeirosCache.filter(b => {
+                const bateTexto = b.nome.toLowerCase().includes(termo) || b.email.toLowerCase().includes(termo);
+                const bateTipo = !tipo || b.tipo === tipo;
+                return bateTexto && bateTipo;
+            });
+
+            const container = document.getElementById('listaBombeirosMobile');
+            container.innerHTML = '';
+
+            filtrados.forEach(b => {
+                const card = document.createElement('div');
+                card.className = 'bombeiro-item';
+                card.innerHTML = `
+                <div class="bombeiro-item-topo">
+                    <strong>${b.nome}</strong>
+                    <span class="badge-tipo">${b.tipo}</span>
+                </div>
+                <div class="bombeiro-item-info">
+                    <div>${b.email}</div>
+                    <div>Perfil: <b>${b.perfil}</b> • CNH: <b>${b.categoriaCnh || '-'}</b></div>
+                    <div>Condutor de emergência: <b>${b.condutorEmergencia ? 'Sim' : 'Não'}</b></div>
+                </div>
+                <div class="bombeiro-item-acoes">
+                    <button class="btn-acao-editar" onclick="editarBombeiro(${b.id})">Editar</button>
+                    <button class="btn-acao-excluir" onclick="excluirBombeiro(${b.id})">Excluir</button>
+                </div>
+            `;
+                container.appendChild(card);
+            });
+        }
+
+        function editarBombeiro(id) {
+            const b = bombeirosCache.find(item => item.id === id);
+            if (!b) return;
+
+            document.getElementById('formTitulo').textContent = 'Editar bombeiro';
+            document.getElementById('bombeiroId').value = b.id;
+            document.getElementById('nome').value = b.nome;
+            document.getElementById('email').value = b.email;
+            document.getElementById('senha').value = '';
+            document.getElementById('senha').placeholder = 'Deixe em branco para manter a atual';
+            document.getElementById('tipo').value = b.tipo;
+            document.getElementById('perfil').value = b.perfil;
+            document.getElementById('categoriaCnh').value = b.categoriaCnh || '';
+            document.getElementById('condutorEmergencia').value = b.condutorEmergencia ? 'true' : 'false';
+            document.getElementById('habilidades').value = b.habilidades || '';
+
+            document.getElementById('secaoFormulario').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function limparFormulario() {
+            document.getElementById('formTitulo').textContent = 'Cadastrar bombeiro';
+            document.getElementById('formBombeiro').reset();
+            document.getElementById('bombeiroId').value = '';
+            document.getElementById('senha').placeholder = 'Obrigatória no cadastro';
+            document.getElementById('condutorEmergencia').value = 'false';
+        }
+
+        function novoCadastro() {
+            limparFormulario();
+            document.getElementById('secaoFormulario').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('formBombeiro').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const id = document.getElementById('bombeiroId').value;
+            const payload = {
+                id: id ? parseInt(id) : null,
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                senha: document.getElementById('senha').value,
+                tipo: document.getElementById('tipo').value,
+                perfil: document.getElementById('perfil').value,
+                categoriaCnh: document.getElementById('categoriaCnh').value,
+                condutorEmergencia: document.getElementById('condutorEmergencia').value === 'true',
+                habilidades: document.getElementById('habilidades').value
+            };
+
+            const url = id ? `/api/admin/bombeiros/${id}` : '/api/admin/bombeiros';
+            const method = id ? 'PUT' : 'POST';
+
+            const resp = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (resp.ok) {
+                limparFormulario();
+                carregarBombeiros();
+            } else {
+                const erro = await resp.json();
+                alert(erro.mensagem || 'Erro ao salvar cadastro.');
+            }
+        });
+
+        async function excluirBombeiro(id) {
+            if (!confirm('Deseja realmente excluir este bombeiro?')) return;
+
+            const resp = await fetch(`/api/admin/bombeiros/${id}`, { method: 'DELETE' });
+            if (resp.ok) {
+                carregarBombeiros();
+            } else {
+                const erro = await resp.json();
+                alert(erro.mensagem || 'Erro ao excluir bombeiro.');
+            }
+        }
+
+        carregarBombeiros();
+    </script>
+</body>
+
+</html>

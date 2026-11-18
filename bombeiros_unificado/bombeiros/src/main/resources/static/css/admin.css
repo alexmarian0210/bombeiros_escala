@@ -1,0 +1,309 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background-color: #e9ecef; /* Fundo externo cinza suave igual à Home */
+    color: #1f2937;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Container estilo App Mobile */
+.app-shell {
+    width: 100%;
+    max-width: 440px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 80px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Cabeçalho Vermelho Compacto */
+.header {
+    background-color: #c62828;
+    color: #ffffff;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.header p {
+    font-size: 0.78rem;
+    opacity: 0.9;
+}
+
+.btn-voltar {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Área Interna */
+.container {
+    padding: 16px;
+}
+
+/* Cards de Resumo (Compactos em 3 colunas) */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 12px 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    text-align: center;
+}
+
+.stat-card span {
+    font-size: 0.7rem;
+    color: #6b7280;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.stat-card strong {
+    font-size: 1.25rem;
+    color: #c62828;
+}
+
+/* Cards de Seção */
+.card {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 16px;
+}
+
+.card h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #111827;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.list-header h2 {
+    margin-bottom: 0;
+}
+
+/* Formulário em coluna única estilo Mobile */
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #374151;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #ffffff;
+}
+
+.form-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.btn-salvar {
+    flex: 1;
+    background: #198754;
+    color: #ffffff;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    background: #6c757d;
+    color: #ffffff;
+    border: none;
+    padding: 11px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.btn-novo {
+    background: #c62828;
+    color: #ffffff;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* Filtros da Lista */
+.filtros-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.filtros-grid input,
+.filtros-grid select {
+    padding: 9px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    background: #ffffff;
+}
+
+/* Lista em Cards Mobile (substitui tabela larga) */
+.bombeiro-lista-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bombeiro-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px;
+    background: #fcfcfd;
+}
+
+.bombeiro-item-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+}
+
+.bombeiro-item-topo strong {
+    font-size: 0.92rem;
+    color: #111827;
+}
+
+.badge-tipo {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.bombeiro-item-info {
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.45;
+    margin-bottom: 8px;
+}
+
+.bombeiro-item-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-acao-editar {
+    flex: 1;
+    background: #0d6efd;
+    color: #ffffff;
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-acao-excluir {
+    flex: 1;
+    background: #dc3545;
+    color: #ffffff;
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Barra de Navegação Inferior Fixa alinhada ao App Shell */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 440px;
+    height: 62px;
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: #8e8e93;
+    font-size: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-weight: 500;
+    flex: 1;
+    height: 100%;
+}
+
+.bottom-nav a.active {
+    color: #d32f2f;
+    font-weight: 600;
+}
+
+.bottom-nav svg {
+    width: 21px;
+    height: 21px;
+}
