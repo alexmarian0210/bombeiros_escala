@@ -1072,4 +1072,34 @@ body {
 .btn-sair:hover {
     background-color: #cc0000;
     color: white;
+}/* ==========================================================================
+   AJUSTE TELA CHEIA NO CELULAR (MOBILE REAL)
+   ========================================================================== */
+@media (max-width: 576px) {
+    body {
+        background-color: #f4f6f8 !important;
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .mobile-app-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-height: none !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .bottom-nav {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
 }

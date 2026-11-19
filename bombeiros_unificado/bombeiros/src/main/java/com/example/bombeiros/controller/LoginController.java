@@ -26,16 +26,8 @@ public class LoginController {
         this.passwordService = passwordService;
     }
 
-    // Abre a tela de login na raiz do sistema.
-    @GetMapping("/")
-    public String raiz(HttpSession session) {
-        if (session.getAttribute("usuarioLogadoId") != null) {
-            return "redirect:/home";
-        }
-        return "Login";
-    }
-
-    @GetMapping("/login")
+    // Abre a tela de login na raiz e em /login
+    @GetMapping({"/", "/login"})
     public String exibirLogin(HttpSession session) {
         if (session.getAttribute("usuarioLogadoId") != null) {
             return "redirect:/home";
@@ -43,8 +35,8 @@ public class LoginController {
         return "Login";
     }
 
-    // Login com suporte a senhas antigas (migração automática) e hashes PBKDF2.
-    @PostMapping("/")
+    // Recebe o formulário POST tanto de "/" quanto de "/login"
+    @PostMapping({"/", "/login"})
     public String processarLogin(
             @RequestParam("email") String email,
             @RequestParam("senha") String senha,
@@ -70,10 +62,8 @@ public class LoginController {
 
             if (senhaCadastrada != null) {
                 if (senhaCadastrada.startsWith("pbkdf2$")) {
-                    // Senha já está criptografada no novo padrão
                     senhaValida = passwordService.matches(senha, senhaCadastrada);
                 } else if (senhaCadastrada.equals(senha)) {
-                    // Senha antiga em texto puro: valida e converte para hash no banco
                     senhaValida = true;
                     bombeiro.setSenhaHash(passwordService.encode(senha));
                     bombeiroRepository.save(bombeiro);
@@ -81,7 +71,6 @@ public class LoginController {
             }
 
             if (senhaValida) {
-                // Cria uma nova sessão após autenticar.
                 HttpSession sessaoAntiga = request.getSession(false);
                 if (sessaoAntiga != null) {
                     sessaoAntiga.invalidate();
