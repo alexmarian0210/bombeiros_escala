@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -21,7 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.bombeiros.model.EscalaPlantao;
 import com.example.bombeiros.model.Participacao;
-import com.example.bombeiros.repository.BombeiroRepository;
 import com.example.bombeiros.repository.EscalaPlantaoRepository;
 import com.example.bombeiros.repository.ParticipacaoRepository;
 import com.example.bombeiros.service.ReservaService;
@@ -36,9 +36,6 @@ public class EscalaController {
 
     @Autowired
     private EscalaPlantaoRepository escalaRepository;
-
-    @Autowired
-    private BombeiroRepository bombeiroRepository;
 
     @Autowired
     private ParticipacaoRepository participacaoRepository;
@@ -66,32 +63,40 @@ public class EscalaController {
         LocalDateTime agora = LocalDateTime.now(FUSO);
 
         String dia = hoje.getDayOfWeek()
-                .getDisplayName(TextStyle.FULL, new Locale("pt", "BR"));
+                .getDisplayName(
+                        TextStyle.FULL,
+                        new Locale("pt", "BR")
+                );
 
         model.addAttribute("dataAtual", hoje);
+
         model.addAttribute(
                 "diaDaSemana",
                 dia.substring(0, 1).toUpperCase() + dia.substring(1)
         );
 
+        // Reservas ativas do usuário
         List<Participacao> reservasAtivas =
                 participacaoRepository
                         .findReservasAtivasDoBombeiro(bombeiroId);
 
+        // Todos os plantões
         List<EscalaPlantao> todosPlantoes =
                 escalaRepository.findAll();
 
-        // Plantões de hoje: MANHÃ, TARDE e NOITE
+        // Plantões de hoje
         List<EscalaPlantao> plantoesHoje =
                 todosPlantoes.stream()
                         .filter(e -> e.getData() != null)
                         .filter(e -> e.getData().equals(hoje))
-                        .sorted(Comparator.comparingInt(
-                                e -> ordemTurno(e.getTurno())
-                        ))
+                        .sorted(
+                                Comparator.comparingInt(
+                                        e -> ordemTurno(e.getTurno())
+                                )
+                        )
                         .toList();
 
-        // Próximos três plantões, considerando data e horário
+        // Próximos três plantões
         List<EscalaPlantao> proximosPlantoes =
                 todosPlantoes.stream()
                         .filter(e -> e.getData() != null)
@@ -112,16 +117,20 @@ public class EscalaController {
                         .filter(p -> p.getEscalaPlantao() != null)
                         .filter(p -> !reservaService
                                 .obterDataHoraInicioPlantao(
-                                        p.getEscalaPlantao())
+                                        p.getEscalaPlantao()
+                                )
                                 .isBefore(agora))
-                        .min(Comparator.comparing(
-                                p -> reservaService
-                                        .obterDataHoraInicioPlantao(
-                                                p.getEscalaPlantao())
-                        ))
+                        .min(
+                                Comparator.comparing(
+                                        p -> reservaService
+                                                .obterDataHoraInicioPlantao(
+                                                        p.getEscalaPlantao()
+                                                )
+                                )
+                        )
                         .orElse(null);
 
-        // Quantidade de plantões futuros que ainda possuem vagas
+        // Quantidade de plantões futuros com vagas
         long totalDisponiveis =
                 todosPlantoes.stream()
                         .filter(e -> e.getData() != null)
@@ -177,11 +186,11 @@ public class EscalaController {
                 "NOITE"
         };
 
-        // Busca os plantões que já existem no banco
+        // Plantões existentes
         List<EscalaPlantao> existentes =
                 escalaRepository.findAll();
 
-        // Monta uma chave para identificar data + turno
+        // Identifica data + turno
         Set<String> chavesExistentes =
                 existentes.stream()
                         .filter(e -> e.getData() != null)
@@ -192,11 +201,11 @@ public class EscalaController {
                         )
                         .collect(Collectors.toSet());
 
-        // Lista de plantões que precisam ser criados
+        // Lista de novos plantões
         List<EscalaPlantao> novosPlantoes =
-                new java.util.ArrayList<>();
+                new ArrayList<>();
 
-        // Cria os três turnos para cada dia restante do mês
+        // Gera os três turnos para cada dia restante do mês
         for (LocalDate data = hoje;
              !data.isAfter(ultimoDiaMes);
              data = data.plusDays(1)) {
@@ -217,26 +226,21 @@ public class EscalaController {
             }
         }
 
-        // Salva os plantões que ainda não existiam
+        // Salva novos plantões
         if (!novosPlantoes.isEmpty()) {
             escalaRepository.saveAll(novosPlantoes);
         }
 
-        // Busca novamente os plantões após a criação
+        // Busca e organiza os plantões do mês
         List<EscalaPlantao> escalas =
                 escalaRepository.findAll().stream()
 
-                        // Remove registros sem data
                         .filter(e -> e.getData() != null)
 
-                        // Não mostra histórico anterior a hoje
                         .filter(e -> !e.getData().isBefore(hoje))
 
-                        // Mostra somente até o último dia deste mês
                         .filter(e -> !e.getData().isAfter(ultimoDiaMes))
 
-                        // Ordena por data e turno:
-                        // MANHÃ -> TARDE -> NOITE
                         .sorted(
                                 Comparator
                                         .comparing(EscalaPlantao::getData)
@@ -249,6 +253,7 @@ public class EscalaController {
         Integer bombeiroId =
                 (Integer) session.getAttribute("usuarioLogadoId");
 
+        // Reservas do usuário
         List<Participacao> minhasReservas =
                 participacaoRepository
                         .findReservasAtivasDoBombeiro(bombeiroId);
@@ -303,6 +308,17 @@ public class EscalaController {
         LocalDateTime inicioPlantao =
                 reservaService.obterDataHoraInicioPlantao(escala);
 
+        // DEPURAÇÃO DE HORÁRIOS
+        System.out.println("=================================");
+        System.out.println(
+                "DATA/HORA ATUAL: " + LocalDateTime.now(FUSO)
+        );
+        System.out.println(
+                "INÍCIO DO PLANTÃO: " + inicioPlantao
+        );
+        System.out.println("=================================");
+
+        // Impede reserva após o início do plantão
         if (!LocalDateTime.now(FUSO).isBefore(inicioPlantao)) {
             return "redirect:/escalas";
         }
@@ -478,7 +494,7 @@ public class EscalaController {
         };
     }
 
-    // Define a ordem correta dos turnos
+    // Define a ordem dos turnos
     private int ordemTurno(String turno) {
 
         if (turno == null) {
@@ -497,6 +513,7 @@ public class EscalaController {
         };
     }
 
+    // Normaliza o nome dos turnos
     private String normalizarTurno(String turno) {
 
         if (turno == null) {

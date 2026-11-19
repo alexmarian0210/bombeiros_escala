@@ -1,0 +1,440 @@
+
+/* =====================================================
+   TELA DE ALERTAS - BOMBEIROS
+   ===================================================== */
+
+/* Área principal */
+
+.alertas-view {
+    background-color: #f4f6f8;
+    padding-bottom: 95px !important;
+}
+
+/* Cabeçalho */
+
+.alertas-header {
+    min-height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #d32f2f;
+    color: white;
+    padding: 20px !important;
+    box-sizing: border-box;
+}
+
+.alertas-header h1 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 5px 0;
+    color: white;
+}
+
+.alertas-header p {
+    font-size: 0.8rem;
+    margin: 0;
+    color: #ffeaea;
+}
+
+.alertas-subtitulo {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    color: #ffdada;
+}
+
+/* Contador do cabeçalho */
+
+.contador-alertas {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.contador-alertas i {
+    font-size: 1rem;
+}
+
+/* Mensagens de retorno */
+
+.mensagem-sucesso,
+.mensagem-erro {
+    margin: 15px 18px 0;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.mensagem-sucesso {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.mensagem-erro {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Resumo */
+
+.resumo-alertas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 18px;
+}
+
+.resumo-card {
+    background: white;
+    border-radius: 15px;
+    padding: 14px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+.resumo-card span {
+    display: block;
+    color: #888;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.resumo-card strong {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #222;
+    margin-top: 3px;
+}
+
+.resumo-icone {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resumo-icone.vermelho {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+.resumo-icone.cinza {
+    background: #f1f3f5;
+    color: #777;
+}
+
+/* Título da lista */
+
+.alertas-titulo-lista {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 8px 18px 12px;
+}
+
+.alertas-titulo-lista h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #222;
+    margin: 0;
+}
+
+.btn-marcar-todas {
+    border: none;
+    background: transparent;
+    color: #d32f2f;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+/* Filtros */
+
+.filtros-alertas {
+    display: flex;
+    gap: 8px;
+    margin: 0 18px 15px;
+}
+
+.filtro {
+    flex: 1;
+    border: none;
+    background: white;
+    padding: 9px 5px;
+    border-radius: 10px;
+    color: #777;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    transition: 0.2s;
+}
+
+.filtro.active {
+    background: #d32f2f;
+    color: white;
+}
+
+/* Lista */
+
+.lista-alertas {
+    padding: 0 18px 20px;
+}
+
+.alerta-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    border-left: 4px solid transparent;
+    box-sizing: border-box;
+}
+
+.alerta-card.nao-lida {
+    border-left-color: #d32f2f;
+}
+
+.alerta-card.lida {
+    border-left-color: #d9dee3;
+}
+
+/* Ícone da notificação */
+
+.icone-alerta {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffebee;
+    color: #d32f2f;
+    font-size: 1.1rem;
+}
+
+.icone-alerta.aviso {
+    background: #fff3cd;
+    color: #b7791f;
+}
+
+.icone-alerta.cancelamento {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.icone-alerta.reserva {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+/* Conteúdo */
+
+.conteudo-alerta {
+    flex: 1;
+    min-width: 0;
+}
+
+.alerta-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 7px;
+}
+
+.tipo-alerta {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #d32f2f;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.indicador-nao-lido {
+    background: #ffebee;
+    color: #d32f2f;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.6rem;
+    font-weight: 800;
+}
+
+.mensagem-alerta {
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #333;
+    margin: 0 0 10px;
+    overflow-wrap: anywhere;
+}
+
+/* Data e plantão */
+
+.alerta-data,
+.alerta-plantao {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    color: #999;
+    font-size: 0.72rem;
+    margin-top: 6px;
+}
+
+.alerta-data i,
+.alerta-plantao i {
+    color: #d32f2f;
+}
+
+.separador {
+    color: #ccc;
+}
+
+/* Ações */
+
+.alerta-acoes {
+    margin-top: 12px;
+}
+
+.btn-marcar-lida {
+    border: none;
+    background: #fce8e8;
+    color: #c62828;
+    padding: 8px 11px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-marcar-lida:hover {
+    background: #f8d7da;
+}
+
+.status-lida {
+    color: #16a34a;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+/* Estado vazio */
+
+.sem-alertas,
+.sem-resultados {
+    background: white;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    color: #888;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sem-alertas {
+    display: flex;
+}
+
+.sem-alertas-icone {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #ffebee;
+    color: #d32f2f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    margin-bottom: 15px;
+}
+
+.sem-alertas h2 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.sem-alertas p,
+.sem-resultados p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.sem-resultados {
+    display: none;
+    min-height: 130px;
+}
+
+.sem-resultados i {
+    font-size: 1.5rem;
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+/* Responsividade */
+
+@media (max-width: 360px) {
+
+    .alertas-header {
+        padding: 16px !important;
+    }
+
+    .resumo-alertas {
+        gap: 8px;
+        margin: 14px;
+    }
+
+    .resumo-card {
+        padding: 10px 7px;
+        gap: 7px;
+    }
+
+    .resumo-icone {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+    }
+
+    .resumo-card span {
+        font-size: 0.65rem;
+    }
+
+    .alertas-titulo-lista,
+    .filtros-alertas {
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+
+    .lista-alertas {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}

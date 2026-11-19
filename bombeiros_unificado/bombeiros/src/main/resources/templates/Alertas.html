@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alertas - Bombeiros</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/alertas.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="mobile-app-container">
+
+    <main class="dashboard-view alertas-view">
+
+        <!-- Cabeçalho -->
+        <header class="dash-header alertas-header">
+            <div>
+                <span class="alertas-subtitulo">CENTRAL DE AVISOS</span>
+                <h1>Alertas</h1>
+                <p>Acompanhe as novidades dos seus plantões.</p>
+            </div>
+
+            <div class="contador-alertas">
+                <i class="fa-solid fa-bell"></i>
+                <span th:text="${qtdNotificacoesNaoLidas}">0</span>
+            </div>
+        </header>
+
+        <!-- Mensagens -->
+        <div class="mensagem-sucesso"
+             th:if="${mensagemSucesso}"
+             th:text="${mensagemSucesso}">
+        </div>
+
+        <div class="mensagem-erro"
+             th:if="${mensagemErro}"
+             th:text="${mensagemErro}">
+        </div>
+
+        <!-- Resumo -->
+        <section class="resumo-alertas">
+
+            <div class="resumo-card">
+                <div class="resumo-icone vermelho">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+
+                <div>
+                    <span>Não lidos</span>
+                    <strong th:text="${qtdNotificacoesNaoLidas}">0</strong>
+                </div>
+            </div>
+
+            <div class="resumo-card">
+                <div class="resumo-icone cinza">
+                    <i class="fa-solid fa-envelope-open"></i>
+                </div>
+
+                <div>
+                    <span>Total de alertas</span>
+                    <strong th:text="${#lists.size(notificacoes)}">0</strong>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Título da lista -->
+        <div class="alertas-titulo-lista">
+            <h2>Suas notificações</h2>
+
+            <form th:if="${qtdNotificacoesNaoLidas > 0}"
+                  th:action="@{/alertas/marcar-todas-lidas}"
+                  method="post">
+
+                <button type="submit" class="btn-marcar-todas">
+                    <i class="fa-solid fa-check-double"></i>
+                    Marcar todas
+                </button>
+            </form>
+        </div>
+
+        <!-- Filtros -->
+        <section class="filtros-alertas">
+
+            <button type="button"
+                    class="filtro active"
+                    data-filtro="todos">
+                Todos
+            </button>
+
+            <button type="button"
+                    class="filtro"
+                    data-filtro="nao-lidos">
+                Não lidos
+            </button>
+
+            <button type="button"
+                    class="filtro"
+                    data-filtro="lidos">
+                Lidos
+            </button>
+
+        </section>
+
+        <!-- Lista -->
+        <section class="lista-alertas">
+
+            <article class="alerta-card"
+                     th:each="notificacao : ${notificacoes}"
+                     th:classappend="${notificacao.status == 'LIDA'} ? ' lida' : ' nao-lida'"
+                     th:attr="data-status=${notificacao.status == 'LIDA' ? 'lidos' : 'nao-lidos'}">
+
+                <!-- Ícone -->
+                <div class="icone-alerta"
+                     th:classappend="${notificacao.tipo != null ? #strings.toLowerCase(notificacao.tipo) : 'aviso'}">
+
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+
+                <!-- Conteúdo -->
+                <div class="conteudo-alerta">
+
+                    <div class="alerta-topo">
+
+                        <span class="tipo-alerta"
+                              th:text="${notificacao.tipo != null ? notificacao.tipo : 'AVISO'}">
+                            AVISO
+                        </span>
+
+                        <span class="indicador-nao-lido"
+                              th:if="${notificacao.status == 'NAO_LIDA'}">
+                            NOVO
+                        </span>
+
+                    </div>
+
+                    <p class="mensagem-alerta"
+                       th:text="${notificacao.mensagem}">
+                        Mensagem da notificação
+                    </p>
+
+                    <!-- Data -->
+                    <div class="alerta-data"
+                         th:if="${notificacao.dataEnvio != null}">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                        <span th:text="${#temporals.format(notificacao.dataEnvio, 'dd/MM/yyyy HH:mm')}">
+                        </span>
+
+                    </div>
+
+                    <!-- Plantão relacionado -->
+                    <div class="alerta-plantao"
+                         th:if="${notificacao.escalaPlantao != null}">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        <span th:text="${#temporals.format(notificacao.escalaPlantao.data, 'dd/MM/yyyy')}">
+                        </span>
+
+                        <span class="separador">•</span>
+
+                        <span th:text="${notificacao.escalaPlantao.turno}">
+                        </span>
+
+                    </div>
+
+                    <!-- Marcar como lida -->
+                    <div class="alerta-acoes">
+
+                        <form th:if="${notificacao.status == 'NAO_LIDA'}"
+                              th:action="@{/alertas/marcar-lida/{id}(id=${notificacao.id})}"
+                              method="post">
+
+                            <button type="submit" class="btn-marcar-lida">
+                                <i class="fa-solid fa-check"></i>
+                                Marcar como lida
+                            </button>
+
+                        </form>
+
+                        <span class="status-lida"
+                              th:if="${notificacao.status == 'LIDA'}">
+
+                            <i class="fa-solid fa-check-double"></i>
+                            Lida
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            <!-- Nenhum alerta cadastrado -->
+            <div class="sem-alertas"
+                 th:if="${#lists.isEmpty(notificacoes)}">
+
+                <div class="sem-alertas-icone">
+                    <i class="fa-regular fa-bell-slash"></i>
+                </div>
+
+                <h2>Nenhum alerta por enquanto</h2>
+
+                <p>
+                    Quando houver novidades sobre seus plantões,
+                    elas aparecerão aqui.
+                </p>
+
+            </div>
+
+            <!-- Nenhum resultado no filtro -->
+            <div class="sem-resultados" id="semResultados">
+
+                <i class="fa-solid fa-filter-circle-xmark"></i>
+
+                <p>Nenhum alerta encontrado neste filtro.</p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Menu inferior -->
+    <nav class="bottom-nav">
+
+        <a th:href="@{/home}" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Início</span>
+        </a>
+
+        <a th:href="@{/escalas}" class="nav-item">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Escalas</span>
+        </a>
+
+        <a th:href="@{/alertas}" class="nav-item active">
+            <i class="fa-solid fa-bell"></i>
+            <span>Alertas</span>
+        </a>
+
+        <a th:if="${ehAdmin}"
+           th:href="@{/admin}"
+           class="nav-item">
+
+            <i class="fas fa-gear"></i>
+            <span>Admin</span>
+
+        </a>
+
+        <a th:href="@{/perfil}" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Perfil</span>
+        </a>
+
+    </nav>
+
+</div>
+
+<script>
+
+    const botoesFiltro = document.querySelectorAll(".filtro");
+    const alertas = document.querySelectorAll(".alerta-card");
+    const semResultados = document.getElementById("semResultados");
+
+    function filtrarAlertas(filtro) {
+
+        let encontrados = 0;
+
+        alertas.forEach(alerta => {
+
+            const status = alerta.dataset.status;
+
+            const mostrar =
+                filtro === "todos" || status === filtro;
+
+            alerta.style.display = mostrar ? "flex" : "none";
+
+            if (mostrar) {
+                encontrados++;
+            }
+
+        });
+
+        semResultados.style.display =
+            encontrados === 0 && alertas.length > 0
+                ? "flex"
+                : "none";
+    }
+
+    botoesFiltro.forEach(botao => {
+
+        botao.addEventListener("click", () => {
+
+            botoesFiltro.forEach(b => {
+                b.classList.remove("active");
+            });
+
+            botao.classList.add("active");
+
+            filtrarAlertas(botao.dataset.filtro);
+
+        });
+
+    });
+
+    filtrarAlertas("todos");
+
+</script>
+
+</body>
+</html>
